@@ -1,3 +1,5 @@
+#Part 1: fun with strings
+
 #(a) Write a method that determines whether a given word or phrase is a palindrome,
 #that is, it reads the same backwards as forwards, ignoring case, punctuation, and
 #nonword characters. (a "nonword character" is defined for our purposes as "a
