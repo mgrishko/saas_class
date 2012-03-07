@@ -29,7 +29,7 @@ class JellyBean < Dessert
     super(name, calories)
   end
 
-  attr_accessor :flavor, :name, :calories
+  attr_accessor :flavor
 
   def delicious?
     flavor == "black licorice" ? false : super
