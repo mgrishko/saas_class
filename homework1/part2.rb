@@ -20,21 +20,32 @@ class NoSuchStrategyError < StandardError ; end
 
 def rps_game_winner(game)
   raise WrongNumberOfPlayersError unless game.length == 2
-  # your code here
+
+  strategies = ['R', 'P' ,'S']
+
+  raise NoSuchStrategyError unless strategies.include?(game[0][1])
+  raise NoSuchStrategyError unless strategies.include?(game[1][1])
+
+  case [game[0][1], game[1][1]]
+    when ['R', 'S'], ['S', 'P'], ['P', 'R'], ['R', 'R'], ['P', 'P'], ['S', 'S']
+    game[0]
+  else
+    game[1]
+  end
 end
 #(b) A rock, paper, scissors tournament is encoded as a bracketed array of games -
 #that is, each element can be considered its own tournament.
 
-[
-[
-  [ ["Armando", "P"], ["Dave", "S"] ],
-  [ ["Richard", "R"], ["Michael", "S"] ],
-],
-[
-  [ ["Allen", "S"], ["Omer", "P"] ],
-  [ ["David E.", "R"], ["Richard X.", "P"] ]
-]
-]
+#[
+#[
+  #[ ["Armando", "P"], ["Dave", "S"] ],
+  #[ ["Richard", "R"], ["Michael", "S"] ],
+#],
+#[
+  #[ ["Allen", "S"], ["Omer", "P"] ],
+  #[ ["David E.", "R"], ["Richard X.", "P"] ]
+#]
+#]
 
 #Under this scenario, Dave would beat Armando (S>P), Richard would beat Michael
 #(R>S), and then Dave and Richard would play (Richard wins since R>S); similarly,
@@ -45,4 +56,12 @@ end
 #and returns the winner (for the above example, it should return [“Richard”,
 #“R”]). You can assume that the array is well formed (that is, there are 2^n players,
 #and each one participates in exactly one match per round).
+
+def rps_tournament_winner(game)
+  begin
+    rps_game_winner(game)
+  rescue NoSuchStrategyError => ex
+    rps_tournament_winner([rps_tournament_winner(game[0]), rps_tournament_winner(game[1])])
+  end
+end
 

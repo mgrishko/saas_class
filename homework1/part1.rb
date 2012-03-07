@@ -17,7 +17,8 @@
 #palindrome?("Abracadabra") # => false (nil is also ok)
 
 def palindrome?(string)
-  string.gsub(/\W+/i, '').reverse.downcase == string.gsub(/\W+/i, '').downcase
+  unite_string = string.gsub(/\W+/i, '').downcase
+  unite_string.reverse == unite_string
 end
 
 #(b) Given a string of input, return a hash whose keys are words in the string and
@@ -33,6 +34,6 @@ end
 #2}
 
 def count_words(string)
-# your code here
+  arr = string.downcase.split(/\W+/)
+  arr.inject(Hash.new(0)) { |h, x| h[x] += 1; h}
 end
-
