@@ -15,10 +15,11 @@
   #Cartesian product b×a.)
   #To start you off, here is a code skeleton and some examples showing possible correct results.
 
-
 class CartesianProduct
+  include Enumerable
+
   def initialize(*args)
-    @product = cartesian args
+    @product = cartesian(args)
   end
 
   def each
@@ -27,7 +28,7 @@ class CartesianProduct
 
 private
 
-  def cartesian arrays
+  def cartesian(arrays)
     case arrays.length
     when 0
       []
@@ -40,8 +41,8 @@ private
     end
   end
 
-  def trivial_cartesian arrays
+  def trivial_cartesian(arrays)
     lhs, rhs = *arrays
-    lhs.inject([]) { |acc, i| acc + ([i] * rhs.length).zip(rhs)}
+    lhs.inject([]) { |acc, i| acc + ([i] * rhs.length).zip(rhs) }
   end
 end

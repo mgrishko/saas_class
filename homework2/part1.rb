@@ -23,7 +23,7 @@
 # metaprogramming to the rescue!
 
 class Numeric
-  @@currencies = {'dollar' => 1, 'yen' => 0.013, 'euro' => 1.292, 'rupee' => 0.019}
+  @@currencies = { 'dollar' => 1, 'yen' => 0.013, 'euro' => 1.292, 'rupee' => 0.019 }
   def method_missing(name)
     convert(name, true) or super
   end
@@ -33,12 +33,22 @@ class Numeric
   end
 
   def convert(name, direct)
-    if direct
-      operation = :*
-    else
-      operation = :/
-    end
+    operation = direct ?  :* : :/
     singular_currency = name.to_s.gsub( /s$/, '')
     @@currencies.has_key?(singular_currency) && send(operation, @@currencies[singular_currency])
+  end
+end
+
+class String
+  def palindrome?
+    backstring = downcase.gsub /\W/, ''
+    backstring == backstring.reverse
+  end
+end
+
+module Enumerable
+  def palindrome?
+    pair = self.inject([[],[]]) { |acc, el| [acc.first + [el], [el] + acc.last] }
+    pair.first == pair.last
   end
 end
